@@ -1,38 +1,28 @@
-.App {
+.dragDropArea {
   text-align: center;
+  position: absolute;
+  margin-top: 150px;
+  margin: 50px;
+  width: 450px;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.item0 {
+  margin-bottom: 20px;
+  font-size: 70px;
+  width: 450px;
+  border: 1px solid black;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+.item1 {
+  margin-bottom: 20px;
+  font-size: 70px;
+  width: 450px;
+  border: 1px solid black;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.item2 {
+  margin-bottom: 20px;
+  font-size: 70px;
+  width: 450px;
+  border: 1px solid black;
 }

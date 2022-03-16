@@ -1,79 +1,37 @@
-import { useState, useEffect } from 'react';
-import { Droppable } from 'react-beautiful-dnd';
-import { Draggable } from 'react-beautiful-dnd';
-import { DragDropContext } from 'react-beautiful-dnd';
 import './App.css';
-
-/* 連番で10個生成 */
-const getItems = (count) =>
-  Array.from({ length: count }, (v, k) => k).map((k) => ({
-    id: `item-${k}`,
-    content: `item ${k}`,
-  }));
-
-/* 並び替え */
-const reorder = (list, startIndex, endIndex) => {
-  const removed = list.splice(startIndex, 1); //ドラッグ開始要素の削除
-  console.log(removed);
-  list.splice(endIndex, 0, removed[0]); //ドロップした箇所に挿入
-};
-
-/* スタイル */
-const grid = 8;
-
-const getListStyle = (isDraggingOver) => ({
-  background: isDraggingOver ? 'lightblue' : 'lightgrey',
-  padding: grid,
-  width: 250,
-});
-
-const getItemStyle = (isDragging, draggableStyle) => ({
-  userSelect: 'none',
-  padding: grid * 2,
-  margin: `0 0 ${grid} 0`,
-  background: isDragging ? 'lightgreen' : 'grey',
-
-  ...draggableStyle, //あらかじめ用意されている。
-});
+import { DragDropContext, Draggable, Droppable } from 'react-beautiful-dnd';
+import React, { useState } from 'react';
 
 function App() {
-  const [items] = useState(getItems(10));
-  // useEffect(() => {
-  //   // console.log(items);
-  //   const [test] = getItems(5);
-  //   console.log(test);
-  // }, []);
+  const [items] = useState([
+    { id: 0, text: 'item0' },
+    { id: 1, text: 'item1' },
+    { id: 2, text: 'item2' },
+  ]);
+
   const onDragEnd = (result) => {
-    // console.log(result);
-    if (!result.destination) {
-      return;
-    }
-    reorder(items, result.source.index, result.destination.index);
+    const remove = items.splice(result.source.index, 1);
+    console.log(remove);
+    items.splice(result.destination.index, 0, remove[0]);
   };
 
   return (
-    <div
-      style={{
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-      }}
-    >
+    <div className="dragDropArea">
       <DragDropContext onDragEnd={onDragEnd}>
         <Droppable droppableId="droppable">
-          {(provided, snapshot) => (
-            <div {...provided.droppableProps} ref={provided.innerRef} style={getListStyle(snapshot.isDraggingOver)}>
+          {(provided) => (
+            <div {...provided.droppableProps} ref={provided.innerRef}>
+              {/* indexはitemsの配列の番号 */}
               {items.map((item, index) => (
-                <Draggable key={item.id} draggableId={item.id} index={index}>
-                  {(provided, snapshot) => (
+                <Draggable draggableId={item.text} index={index} key={item.id}>
+                  {(provided) => (
                     <div
+                      className="item0"
                       ref={provided.innerRef}
                       {...provided.draggableProps}
                       {...provided.dragHandleProps}
-                      style={getItemStyle(snapshot.isDragging, provided.draggableProps.style)}
                     >
-                      {item.content}
+                      {item.text}
                     </div>
                   )}
                 </Draggable>
